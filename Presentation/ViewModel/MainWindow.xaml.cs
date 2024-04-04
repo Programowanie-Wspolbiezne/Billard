@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using Data;
+using Logic;
+using System.Collections.ObjectModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ball = Logic.Ball;
 
 namespace Presentation
 {
@@ -16,9 +20,16 @@ namespace Presentation
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ObservableCollection<Ball> Balls { get; } = new ObservableCollection<Ball>();
         public MainWindow()
         {
+            DataContext = this;
             InitializeComponent();
+            for (int i = 0; i < 7; i++)
+            {
+                Balls.Add(new Ball(10));
+            }
+            
         }
     }
 }
