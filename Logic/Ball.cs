@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class Ball : Data.Ball
+    public class Ball : Data.Ball, IBall
     {
         
         public Ball() : base(10)
