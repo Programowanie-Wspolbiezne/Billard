@@ -7,8 +7,24 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class Ball(float radius) : INotifyPropertyChanged
+    public class Ball : INotifyPropertyChanged
     {
+        private float radius;
+        Timer timer;
+
+        public Ball(float radius)
+        {
+            this.radius = radius;
+            timer = new Timer(x => Move(), null, 0, 100);
+
+        }
+        private void Move()
+        {
+            X += new Random().NextDouble() * 10 - 5;
+            Y += new Random().NextDouble() * 10 - 5;
+            System.Diagnostics.Debug.WriteLine(X + " " + Y);
+        }
+
         private HashSet<IObserver<Ball>> observers = new HashSet<IObserver<Ball>>();
 
         private double x;
@@ -41,13 +57,14 @@ namespace Data
                 }
             }
         }
-        private float radius = radius;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 
 }

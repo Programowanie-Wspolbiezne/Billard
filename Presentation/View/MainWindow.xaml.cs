@@ -20,16 +20,19 @@ namespace Presentation
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<Ball> Balls { get; } = new ObservableCollection<Ball>();
-        public MainWindow()
+        IBallManager ballManager;
+        public ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
+        public MainWindow(IBallManager ballManager)
         {
+            this.ballManager = ballManager;
             DataContext = this;
             InitializeComponent();
             for (int i = 0; i < 7; i++)
             {
-                Balls.Add(new Ball(10));
+                Balls.Add(ballManager.CreateBall(0,0,0));
             }
             
         }
+
     }
 }
