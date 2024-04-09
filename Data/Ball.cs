@@ -8,60 +8,25 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class Ball : INotifyPropertyChanged
+    internal class Ball : INotifyPropertyChanged,Data.IBall
     {
         private float radius;
-        Timer timer;
 
         public Ball(float radius)
         {
             this.radius = radius;
-            timer = new Timer(x => Move(), null, 0, 40);
-
-        }
-
-        private double distanceToTarget() {
-            return Math.Sqrt(Math.Pow(targetX-X,2)+ Math.Pow(targetY - Y, 2));
-        }
-
-
-
-        private void MoveTowardsTarget()
-        {
-            double speed = 2;
-            double dist = distanceToTarget();
-            if (speed > dist) {
-                X = targetX;
-                Y = targetY;
-                return;
-            }
-            double progress = speed / dist;
-            X = X * (1 - progress) + targetX * progress;
-            Y = Y * (1 - progress) + targetY * progress;
-        }
-        private void Move()
-        {
-            if(targetX == X && targetY == Y)
-            {
-                //this should be linked to current canvas size
-                targetX = (new Random().NextDouble() * 246);
-                targetY = (new Random().NextDouble() * 250);
-            }
-
-
-            MoveTowardsTarget();
-            System.Diagnostics.Debug.WriteLine(X + " " + Y);
         }
 
         private HashSet<IObserver<Ball>> observers = new HashSet<IObserver<Ball>>();
 
         private double x;
-        private double targetX {  get; set; }
-        private double targetY { get; set; }
+       
+        //should this be observable or should all of that
+        //be moved to logic
         public double X { get {
                 return x;
             }
-            protected set {
+             set {
                 x = value;
                 OnPropertyChanged(nameof(X));
                 foreach (var observer in observers) {
@@ -76,7 +41,7 @@ namespace Data
             {
                 return y;
             }
-            protected set
+             set
             {
                 y = value;
                 OnPropertyChanged(nameof(Y));

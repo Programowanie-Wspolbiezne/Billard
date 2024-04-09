@@ -6,11 +6,11 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic
+namespace Data
 {
     public interface IBall : INotifyPropertyChanged
     {
-        public void AddForce(Vector2 force);
-       
+        double X { get; set; }
+        double Y { get; set; }
     }
 }

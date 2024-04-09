@@ -8,9 +8,9 @@ namespace Logic
 {
     public class BallManager : IBallManager
     {
-        public Ball CreateBall(int x, int y, float radius)
+        public IBall CreateBall(int x, int y, float radius)
         {
-            Ball ball = new Ball();
+            IBall ball = new Ball(Data.BallFactory.createBall((int)radius));
             return ball;
         }
     }
