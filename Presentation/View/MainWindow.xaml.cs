@@ -12,7 +12,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ball = Logic.Ball;
-using IBall = Logic.IBall;
 
 namespace Presentation
 {
