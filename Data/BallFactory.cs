@@ -8,9 +8,12 @@ namespace Data
 {
     public class BallFactory
     {
-        public static Data.IBall createBall(int radius)
+        public static Data.IBall createBall(int radius, double x, double y)
         {
-            return new Data.Ball(radius);
+            Data.Ball ball =  new Data.Ball(radius);
+            ball.X = x;
+            ball.Y = y;
+            return ball;
         }
     }
 }

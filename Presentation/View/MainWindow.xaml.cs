@@ -23,16 +23,28 @@ namespace Presentation
     {
         IBallManager ballManager;
         public ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
+        public string BallCount {  get; set; } 
+
         public MainWindow(IBallManager ballManager)
         {
             this.ballManager = ballManager;
             DataContext = this;
             InitializeComponent();
-            for (int i = 0; i < 7; i++)
-            {
-                Balls.Add(ballManager.CreateBall(0,0,0));
-            }
             
+            
+        }
+        private void restart(object sender, RoutedEventArgs e)
+        {
+            start(int.Parse(BallCount));
+        }
+
+        private void start(int ballCount)
+        {
+            Balls.Clear();
+            for (int i = 0; i < ballCount; i++)
+            {
+                Balls.Add(ballManager.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 0));
+            }
         }
 
     }

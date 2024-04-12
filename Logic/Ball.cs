@@ -20,19 +20,12 @@ namespace Logic
             //I left INotifyPropertyChanged elements in Data, but they could be completly moved here
             dBall.PropertyChanged += OnDballPropertyChange;
             timer = new Timer(x => Move(), null, 0, 40);
+            GetNewTarget();
         }
 
         private double targetX { get; set; }
         private double targetY { get; set; }
 
-        private HashSet<IObserver<Ball>> observers = new HashSet<IObserver<Ball>>();
-
-        public void AddForce(Vector2 force)
-        {
-            //And it is already an issue
-            //X = force.X;
-            //Y = force.Y;
-        }
 
         void IBall.AddForce(Vector2 force)
         {
@@ -47,7 +40,7 @@ namespace Logic
 
         private void MoveTowardsTarget()
         {
-            double speed = 2;
+            double speed = 10;
             double dist = distanceToTarget();
             if (speed >= dist)
             {
@@ -63,24 +56,28 @@ namespace Logic
         {
             if (targetX == X && targetY == Y)
             {
-                //this should be linked to current canvas size
-                targetX = (new Random().NextDouble() * 246);
-                targetY = (new Random().NextDouble() * 250);
+                GetNewTarget();
             }
 
-
             MoveTowardsTarget();
-            System.Diagnostics.Debug.WriteLine(X + " " + Y);
         }
-
+        private void GetNewTarget()
+        {
+            if (new Random().NextDouble() > 0.5)
+            {
+                targetX = (new Random().NextDouble() * 590);
+                targetY = (new Random().Next(2) * 290);
+            }
+            else
+            {
+                targetY = (new Random().NextDouble() * 290);
+                targetX = (new Random().Next(2) * 590);
+            }
+        }
 
         private void OnDballPropertyChange(object sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged(e.PropertyName);
-            foreach (var observer in observers)
-            {
-                observer.OnNext(this);
-            }
         }
 
 

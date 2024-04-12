@@ -7,26 +7,37 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
-        <ItemsControl ItemsSource="{Binding Balls}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                    <Canvas Margin="128,52,118,60" Background="Aqua"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="400"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="400"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding BallCount}" Grid.Row="0" Grid.Column="0"/>
+        <Button Click="restart" Content="Restart" Grid.Row="0" Grid.Column="1"/>
+
+        <ItemsControl ItemsSource="{Binding Balls}" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Height="300" Width="600" Background="Aqua" />
                 </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate >
-                    <DataTemplate >
-                        <Ellipse Width="10" Height="10" Fill="Red" ></Ellipse>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Top" Value="{Binding X}" />
-                        <Setter Property="Canvas.Left" Value="{Binding Y}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-            
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate >
+                <DataTemplate >
+                    <Ellipse Width="10" Height="10" Fill="Red" ></Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+
 
     </Grid>
 </Window>

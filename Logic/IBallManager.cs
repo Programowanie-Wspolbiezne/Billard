@@ -9,7 +9,7 @@ namespace Logic
 {
     public interface IBallManager
     {
-        public IBall CreateBall(int x, int y, float radius);
+        public IBall CreateBall(double x, double y, float radius);
 
 
     }

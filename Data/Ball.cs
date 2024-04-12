@@ -16,9 +16,6 @@ namespace Data
         {
             this.radius = radius;
         }
-
-        private HashSet<IObserver<Ball>> observers = new HashSet<IObserver<Ball>>();
-
         private double x;
        
         //should this be observable or should all of that
@@ -29,9 +26,6 @@ namespace Data
              set {
                 x = value;
                 OnPropertyChanged(nameof(X));
-                foreach (var observer in observers) {
-                    observer.OnNext(this);
-                        }
             }
         }
         private double y;
@@ -41,15 +35,10 @@ namespace Data
             {
                 return y;
             }
-             set
+            set
             {
-                y = value;
-                OnPropertyChanged(nameof(Y));
-
-                foreach (var observer in observers)
-                {
-                    observer.OnNext(this);
-                }
+            y = value;
+            OnPropertyChanged(nameof(Y));
             }
         }
 
