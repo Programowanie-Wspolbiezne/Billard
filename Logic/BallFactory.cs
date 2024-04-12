@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class BallManager : IBallManager
+    public class BallFactory
     {
-        public IBall CreateBall(double x, double y, float radius)
+        public static IBall CreateBall(double x, double y, float radius)
         {
             IBall ball = new Ball(Data.BallFactory.createBall((int)radius, x, y));
             return ball;

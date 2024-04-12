@@ -21,17 +21,13 @@ namespace Presentation
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBallManager ballManager;
+       
         public ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
         public string BallCount {  get; set; } 
 
-        public MainWindow(IBallManager ballManager)
+        public MainWindow()
         {
-            this.ballManager = ballManager;
             DataContext = this;
-            InitializeComponent();
-            
-            
         }
         private void restart(object sender, RoutedEventArgs e)
         {
@@ -43,7 +39,7 @@ namespace Presentation
             Balls.Clear();
             for (int i = 0; i < ballCount; i++)
             {
-                Balls.Add(ballManager.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 0));
+                Balls.Add(Logic.BallFactory.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 0));
             }
         }
 

@@ -27,10 +27,6 @@ namespace Logic
         private double targetY { get; set; }
 
 
-        void IBall.AddForce(Vector2 force)
-        {
-            throw new NotImplementedException();
-        }
 
         private double distanceToTarget()
         {

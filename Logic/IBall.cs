@@ -10,7 +10,6 @@ namespace Logic
 {
     public interface IBall : INotifyPropertyChanged
     {
-        public void AddForce(Vector2 force);
        
     }
 }
