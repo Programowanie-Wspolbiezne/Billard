@@ -10,6 +10,7 @@ namespace Logic
 {
     public interface IBall : INotifyPropertyChanged
     {
-       
+        public double X { get; }
+        public double Y { get; }
     }
 }
