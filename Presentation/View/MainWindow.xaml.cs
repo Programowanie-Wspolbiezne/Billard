@@ -22,26 +22,14 @@ namespace Presentation
     public partial class MainWindow : Window
     {
        
-        public ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
-        public string BallCount {  get; set; } 
+       
 
         public MainWindow()
         {
-            DataContext = this;
-        }
-        private void restart(object sender, RoutedEventArgs e)
-        {
-            start(int.Parse(BallCount));
+            InitializeComponent();
+            DataContext = new MainWindowVM();
         }
 
-        private void start(int ballCount)
-        {
-            Balls.Clear();
-            for (int i = 0; i < ballCount; i++)
-            {
-                Balls.Add(Logic.BallFactory.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 0));
-            }
-        }
 
     }
 }
