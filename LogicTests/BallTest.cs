@@ -41,10 +41,10 @@ namespace LogicTests
         {
 
             var are = new AutoResetEvent(false);
-              Logic.IBall ball = Logic.BallFactory.CreateBall(10, 10, 10);
-              ball.PropertyChanged += (s, e) => { are.Set(); };
-              ball.PropertyChanged += OnballPropertyChangeTest;
-              Assert.IsNotNull(ball);
+            Logic.IBall ball = Logic.BallFactory.CreateBall(10, 10, 10);
+            ball.PropertyChanged += (s, e) => { are.Set(); };
+            ball.PropertyChanged += OnballPropertyChangeTest;
+            Assert.IsNotNull(ball);
 
             var wasSignaled = are.WaitOne(timeout: TimeSpan.FromSeconds(5));
             Assert.IsTrue(wasSignaled);
