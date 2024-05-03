@@ -48,7 +48,7 @@ namespace Data
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        public int Mass {  get; set; }
     }
 
 }

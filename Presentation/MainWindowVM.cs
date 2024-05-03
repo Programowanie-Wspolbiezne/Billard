@@ -31,10 +31,17 @@ namespace Presentation
         private void start(int ballCount)
         {
             Balls.Clear();
+            ColisionDetector detector = new ColisionDetector();
+
             for (int i = 0; i < ballCount; i++)
             {
-                Balls.Add(BallFactory.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 0));
+                IBall ball = BallFactory.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 0);
+                ball.R = 10;
+                Balls.Add(ball);
+                detector.addBall(ball);
             }
+            
+            detector.activate();
         }
     }
 }

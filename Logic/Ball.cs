@@ -23,14 +23,17 @@ namespace Logic
             thread = new Thread(new ThreadStart(Move));
             thread.Start();
 
-            velocity = new Vector2(new Random().NextSingle(), new Random().NextSingle());
-            velocity = Vector2.Normalize(velocity);
+            Velocity = new Vector2(new Random().NextSingle(), new Random().NextSingle());
+            Velocity = Vector2.Normalize(velocity)/4;
+            dBall.Mass = 1;
         }
 
 
         private Thread thread;
 
         private Vector2 velocity;
+
+        public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
         
        
         private void Move()
@@ -70,6 +73,8 @@ namespace Logic
         public double X { get { return dBall.X; } }
         public double Y { get { return dBall.Y; } }
 
-       
+        public int Mass { get { return dBall.Mass; } set { dBall.Mass = value; } }
+
+        public int R { get ; set ; }
     }
 }

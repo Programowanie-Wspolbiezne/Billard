@@ -12,5 +12,7 @@ namespace Data
     {
         public double X { get; set; }
         public double Y { get; set; }
+        public int Mass { get; set; }
+
     }
 }

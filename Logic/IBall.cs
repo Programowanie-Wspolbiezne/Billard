@@ -12,5 +12,8 @@ namespace Logic
     {
         public double X { get; }
         public double Y { get; }
+        public Vector2 Velocity { get; set; }
+        public int Mass {  get; set; }
+        public int R {  get; set; }
     }
 }
