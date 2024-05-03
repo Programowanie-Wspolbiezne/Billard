@@ -19,57 +19,39 @@ namespace Logic
             dBall = _dBall;
             //I left INotifyPropertyChanged elements in Data, but they could be completly moved here
             dBall.PropertyChanged += OnDballPropertyChange;
-            timer = new Timer(x => Move(), null, 0, 40);
-            GetNewTarget();
-        }
+            //timer = new Timer(x => Move(), null, 0, 40);
+            thread = new Thread(new ThreadStart(Move));
+            thread.Start();
 
-        private double targetX { get; set; }
-        private double targetY { get; set; }
-
-
-
-        private double distanceToTarget()
-        {
-            return Math.Sqrt(Math.Pow(targetX - X, 2) + Math.Pow(targetY - Y, 2));
+            velocity = new Vector2(new Random().NextSingle(), new Random().NextSingle());
+            velocity = Vector2.Normalize(velocity);
         }
 
 
-        private void MoveTowardsTarget()
-        {
-            double speed = 10;
-            double dist = distanceToTarget();
-            if (speed >= dist)
-            {
-                dBall.X = targetX;
-                dBall.Y = targetY;
-                return;
-            }
-            double progress = speed / dist;
-            dBall.X = dBall.X * (1 - progress) + targetX * progress;
-            dBall.Y = dBall.Y * (1 - progress) + targetY * progress;
-        }
+        private Thread thread;
+
+        private Vector2 velocity;
+        
+       
         private void Move()
         {
-            if (targetX == X && targetY == Y)
+            while (true)
             {
-                GetNewTarget();
-            }
+                if (dBall.X + velocity.X <= 0  || dBall.X + velocity.X >= 590) {
+                    velocity.X = -velocity.X;
+                }
+                if (dBall.Y + velocity.Y <= 0 || dBall.Y + velocity.Y >= 290)
+                {
+                    velocity.Y = -velocity.Y;
+                }
 
-            MoveTowardsTarget();
-        }
-        private void GetNewTarget()
-        {
-            if (new Random().NextDouble() > 0.5)
-            {
-                targetX = (new Random().NextDouble() * 590);
-                targetY = (new Random().Next(2) * 290);
+                dBall.X += velocity.X;
+                dBall.Y += velocity.Y;
+                Thread.Sleep(1);
             }
-            else
-            {
-                targetY = (new Random().NextDouble() * 290);
-                targetX = (new Random().Next(2) * 590);
-            }
+            
         }
+
 
         private void OnDballPropertyChange(object sender, PropertyChangedEventArgs e)
         {
