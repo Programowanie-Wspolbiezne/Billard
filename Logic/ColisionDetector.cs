@@ -39,7 +39,8 @@ namespace Logic
 
         private double distance(IBall ball, IBall ball2)
         {
-            return Math.Sqrt((ball.X - ball2.X) * (ball.X - ball2.X) + (ball.Y - ball2.Y) * (ball.Y - ball2.Y));
+            float offset = ball.R / 2;
+            return Math.Sqrt((ball.X+offset) - (ball2.X+offset)) * ((ball.X-offset) - (ball2.X+offset)) + ((ball.Y-offset) - (ball2.Y-offset)) * ((ball.Y-offset) - (ball2.Y-offset));
         }
 
         private void colide(IBall b1, IBall b2)
