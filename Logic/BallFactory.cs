@@ -11,7 +11,6 @@ namespace Logic
         public static IBall CreateBall(double x, double y, double radius)
         {
             IBall ball = new Ball(Data.BallFactory.createBall(radius, x, y));
-            ball.R = radius;
             ColisionDetector.addBall(ball);
             return ball;
         }

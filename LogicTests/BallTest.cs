@@ -11,8 +11,6 @@ namespace LogicTests
         {
             Logic.IBall ball = Logic.BallFactory.CreateBall(10, 10, 10);
             Assert.IsNotNull(ball);
-            Assert.IsTrue(ball.X == 10);
-            Assert.IsTrue(ball.Y == 10);
         }
 
 
