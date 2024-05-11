@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Logic
         public double Y { get; }
         public Vector2 Velocity { get; set; }
         public int Mass {  get; set; }
-        public int R {  get; set; }
+        public double R {  get; set; }
+        public Board Board { get; set; }
     }
 }

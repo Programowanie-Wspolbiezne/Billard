@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class Board(int width, int height, float friction)
+    public class Board(int width, int height)
     {
-        private float friction = friction;
-        private int width = width;
-        private int height = height;
-        private List<Ball> balls = [];
+        public int Width { get; set; } = width; 
+        public int Height { get; set;} = height;
     }
 }

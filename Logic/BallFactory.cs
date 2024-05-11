@@ -8,9 +8,11 @@ namespace Logic
 {
     public class BallFactory
     {
-        public static IBall CreateBall(double x, double y, float radius)
+        public static IBall CreateBall(double x, double y, double radius)
         {
-            IBall ball = new Ball(Data.BallFactory.createBall((int)radius, x, y));
+            IBall ball = new Ball(Data.BallFactory.createBall(radius, x, y));
+            ball.R = radius;
+            ColisionDetector.addBall(ball);
             return ball;
         }
     }

@@ -19,8 +19,10 @@ namespace Presentation
             Restart = new Start(this);
         }
 
-        public ObservableCollection<IBall> Balls { get; } = new ObservableCollection<IBall>();
+        public ObservableCollection<IBall> Balls { get; set; } = new ObservableCollection<IBall>();
         public string BallCount { get; set; } = "";
+        LogicAPI logicAPI = LogicAPI.getInstance();
+
 
 
         public void restart()
@@ -31,17 +33,12 @@ namespace Presentation
         private void start(int ballCount)
         {
             Balls.Clear();
-            ColisionDetector detector = new ColisionDetector();
-
-            for (int i = 0; i < ballCount; i++)
+            ObservableCollection<IBall> balls = logicAPI.Init(ballCount);
+            foreach (IBall b in balls)
             {
-                IBall ball = BallFactory.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 0);
-                ball.R = 10;
-                Balls.Add(ball);
-                detector.addBall(ball);
+                Balls.Add(b);
             }
-            
-            detector.activate();
+
         }
     }
 }

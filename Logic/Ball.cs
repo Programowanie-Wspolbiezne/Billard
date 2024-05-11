@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -11,15 +12,12 @@ namespace Logic
 {
     public class Ball : Logic.IBall
     {
-        Timer timer;
         Data.IBall dBall;
         
         public Ball(Data.IBall _dBall) 
         {
             dBall = _dBall;
-            //I left INotifyPropertyChanged elements in Data, but they could be completly moved here
             dBall.PropertyChanged += OnDballPropertyChange;
-            //timer = new Timer(x => Move(), null, 0, 40);
             thread = new Thread(new ThreadStart(Move));
             thread.Start();
 
@@ -34,22 +32,26 @@ namespace Logic
         private Vector2 velocity;
 
         public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
-        
-       
+
+
+        public double X { get { return dBall.X; } }
+        public double Y { get { return dBall.Y; } }
+
+        public int Mass { get { return dBall.Mass; } set { dBall.Mass = value; } }
+
+        public double R { get { return dBall.R; } set { dBall.R = value; } }
+        public Board Board { get; set; }
+
+
         private void Move()
         {
             while (true)
             {
-                if (dBall.X + velocity.X <= 0  || dBall.X + velocity.X >= 590) {
-                    velocity.X = -velocity.X;
-                }
-                if (dBall.Y + velocity.Y <= 0 || dBall.Y + velocity.Y >= 290)
-                {
-                    velocity.Y = -velocity.Y;
-                }
+               
 
                 dBall.X += velocity.X;
                 dBall.Y += velocity.Y;
+                
                 Thread.Sleep(1);
             }
             
@@ -70,11 +72,5 @@ namespace Logic
 
 
 
-        public double X { get { return dBall.X; } }
-        public double Y { get { return dBall.Y; } }
-
-        public int Mass { get { return dBall.Mass; } set { dBall.Mass = value; } }
-
-        public int R { get ; set ; }
     }
 }

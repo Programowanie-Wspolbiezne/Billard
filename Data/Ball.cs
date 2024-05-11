@@ -10,9 +10,10 @@ namespace Data
 {
     internal class Ball : INotifyPropertyChanged,Data.IBall
     {
-        private float radius;
+        private double radius;
+        public double R { get { return radius; } set { radius = value; } }
 
-        public Ball(float radius)
+        public Ball(double radius)
         {
             this.radius = radius;
         }
