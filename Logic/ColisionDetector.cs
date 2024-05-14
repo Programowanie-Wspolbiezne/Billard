@@ -16,7 +16,7 @@ namespace Logic
     {
         private static Collection<IBall> _balls = new Collection<IBall>();
         private static Object lockk = new object();
-        public static Board Board { get; set; }
+        public static IBoard Board { get; set; }
 
         private static void colide_event(object sender, PropertyChangedEventArgs e)
         {

@@ -16,6 +16,5 @@ namespace Logic
         public Vector2 Velocity { get; set; }
         public int Mass {  get; set; }
         public double R {  get; set; }
-        public Board Board { get; set; }
     }
 }

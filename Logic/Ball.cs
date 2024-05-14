@@ -40,7 +40,6 @@ namespace Logic
         public int Mass { get { return dBall.Mass; } set { dBall.Mass = value; } }
 
         public double R { get { return dBall.R; } set { dBall.R = value; } }
-        public Board Board { get; set; }
 
 
         private void Move()

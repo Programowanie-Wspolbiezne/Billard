@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class BallFactory
+    public abstract class BallFactory
     {
         public static Data.IBall createBall(double radius, double x, double y)
         {
