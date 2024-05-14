@@ -16,7 +16,7 @@ namespace LogicTests
 
         private void OnballPropertyChangeTest(object sender, PropertyChangedEventArgs e)
         {
-            Assert.IsNotNull((Logic.IBall)sender! + null);
+            Assert.IsNotNull((Logic.IBall)sender);
             Assert.IsInstanceOfType(sender, typeof(Logic.IBall));
             switch (e.PropertyName)
             {
@@ -40,6 +40,7 @@ namespace LogicTests
 
             var are = new AutoResetEvent(false);
             Logic.IBall ball = Logic.BallFactory.CreateBall(10, 10, 10);
+            ball.Start();
             ball.PropertyChanged += (s, e) => { are.Set(); };
             ball.PropertyChanged += OnballPropertyChangeTest;
             Assert.IsNotNull(ball);

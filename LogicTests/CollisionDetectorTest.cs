@@ -16,7 +16,7 @@ namespace LogicTests
 
         private void OnLeftBallPropertyChangeTest(object sender, PropertyChangedEventArgs e)
         {
-            Assert.IsNotNull((Logic.IBall)sender! + null);
+            Assert.IsNotNull((Logic.IBall)sender);
             Assert.IsInstanceOfType(sender, typeof(Logic.IBall));
             Logic.IBall ball = (Logic.IBall)sender;
             Assert.IsTrue(ball.Velocity.X < 0);
@@ -24,7 +24,7 @@ namespace LogicTests
         }
         private void OnRightBallPropertyChangeTest(object sender, PropertyChangedEventArgs e)
         {
-            Assert.IsNotNull((Logic.IBall)sender! + null);
+            Assert.IsNotNull((Logic.IBall)sender);
             Assert.IsInstanceOfType(sender, typeof(Logic.IBall));
             Logic.IBall ball = (Logic.IBall)sender;
             Assert.IsTrue(ball.Velocity.X > 0);
@@ -36,8 +36,10 @@ namespace LogicTests
         {
             Logic.IBall leftBall = Logic.BallFactory.CreateBall(49, 100, 10);
             leftBall.Velocity = new System.Numerics.Vector2(1, 0);
+            leftBall.Start();
             Logic.IBall rightBall = Logic.BallFactory.CreateBall(61, 100, 10);
             rightBall.Velocity = new System.Numerics.Vector2(-1, 0);
+            rightBall.Start();
 
             IBoard board = Data.BoardFactory.createBoard(1000, 1000);
 

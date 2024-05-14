@@ -25,20 +25,31 @@ namespace Logic
             public override ObservableCollection<IBall> Init(int ballCount)
             {
                 IBoard board = Data.BoardFactory.createBoard(600, 300);
-                ColisionDetector.deactivate();
+                
                 ColisionDetector.Board = board;
+
+                foreach (var ball in Balls)
+                {
+                    ball.Kill();
+                }
                 Balls.Clear();
+                ColisionDetector.deactivate();
+
                 for (int i = 0; i < ballCount; i++)
                 {
-                    IBall ball = BallFactory.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 10);
+                    IBall ball = BallFactory.CreateBall(new Random().NextDouble() * 580, new Random().NextDouble() * 280, 10);
                     ColisionDetector.addBall(ball);
                 
                     Balls.Add(ball);
-
-
                 }
 
                 ColisionDetector.activate();
+
+                foreach (var ball in Balls)
+                {
+                    ball.Start();
+                }
+
                 return Balls;
             }
         }

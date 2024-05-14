@@ -19,7 +19,7 @@ namespace Logic
             dBall = _dBall;
             dBall.PropertyChanged += OnDballPropertyChange;
             thread = new Thread(new ThreadStart(Move));
-            thread.Start();
+          
 
             Velocity = new Vector2(new Random().NextSingle(), new Random().NextSingle());
             Velocity = Vector2.Normalize(Velocity) /4;
@@ -35,10 +35,10 @@ namespace Logic
         public int Mass { get { return dBall.Mass; } set { dBall.Mass = value; } }
         public double R { get { return dBall.R; } set { dBall.R = value; } }
 
-
+        private bool is_not_dead = true;
         private void Move()
         {
-            while (true)
+            while (is_not_dead)
             {
                
                 dBall.X += Velocity.X;
@@ -62,7 +62,15 @@ namespace Logic
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public void Kill() {
+            is_not_dead = false;
+            thread.Join();
+        }
 
+        public void Start()
+        {
+            thread.Start();
+        }
 
     }
 }

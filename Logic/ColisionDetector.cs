@@ -89,6 +89,7 @@ namespace Logic
             {
                 ball.PropertyChanged -= colide_event;
             }
+            _balls.Clear();
         }
     }
 
