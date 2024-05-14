@@ -22,18 +22,14 @@ namespace Logic
             thread.Start();
 
             Velocity = new Vector2(new Random().NextSingle(), new Random().NextSingle());
-            Velocity = Vector2.Normalize(velocity)/4;
+            Velocity = Vector2.Normalize(Velocity) /4;
             dBall.Mass = 1;
         }
 
 
         private Thread thread;
 
-        private Vector2 velocity;
-
-        public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
-
-
+        public Vector2 Velocity { get { return dBall.Velocity; } set { dBall.Velocity = value; } }
         public double X { get { return dBall.X; } }
         public double Y { get { return dBall.Y; } }
 
@@ -48,8 +44,8 @@ namespace Logic
             {
                
 
-                dBall.X += velocity.X;
-                dBall.Y += velocity.Y;
+                dBall.X += Velocity.X;
+                dBall.Y += Velocity.Y;
                 
                 Thread.Sleep(1);
             }

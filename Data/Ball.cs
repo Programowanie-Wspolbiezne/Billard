@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,12 +11,13 @@ namespace Data
 {
     internal class Ball : INotifyPropertyChanged,Data.IBall
     {
-        private double radius;
-        public double R { get { return radius; } set { radius = value; } }
+
+        public double R {get; set;}
+        public Vector2 Velocity { get; set; }
 
         public Ball(double radius)
         {
-            this.radius = radius;
+            this.R = radius;
         }
         private double x;
        
