@@ -27,6 +27,7 @@ namespace Logic
                 IBoard board = Data.BoardFactory.createBoard(600, 300);
                 ColisionDetector.deactivate();
                 ColisionDetector.Board = board;
+                Balls.Clear();
                 for (int i = 0; i < ballCount; i++)
                 {
                     IBall ball = BallFactory.CreateBall(new Random().NextDouble() * 590, new Random().NextDouble() * 290, 10);
