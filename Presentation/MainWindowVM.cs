@@ -32,8 +32,8 @@ namespace Presentation
 
         private void start(int ballCount)
         {
-            Balls.Clear();
             ObservableCollection<IBall> balls = logicAPI.Init(ballCount);
+            Balls.Clear();
             foreach (IBall b in balls)
             {
                 Balls.Add(b);

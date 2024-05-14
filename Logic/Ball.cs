@@ -32,9 +32,7 @@ namespace Logic
         public Vector2 Velocity { get { return dBall.Velocity; } set { dBall.Velocity = value; } }
         public double X { get { return dBall.X; } }
         public double Y { get { return dBall.Y; } }
-
         public int Mass { get { return dBall.Mass; } set { dBall.Mass = value; } }
-
         public double R { get { return dBall.R; } set { dBall.R = value; } }
 
 
@@ -43,7 +41,6 @@ namespace Logic
             while (true)
             {
                
-
                 dBall.X += Velocity.X;
                 dBall.Y += Velocity.Y;
                 

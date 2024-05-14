@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public static class ColisionDetector
+    public class ColisionDetector
     {
-        private static Collection<IBall> _balls = new Collection<IBall>();
-        private static Object lockk = new object();
-        public static IBoard Board { get; set; }
+        private Collection<IBall> _balls = new Collection<IBall>();
+        private Object lockk = new object();
+        public IBoard Board { get; set; }
 
-        private static void colide_event(object sender, PropertyChangedEventArgs e)
+        private void colide_event(object sender, PropertyChangedEventArgs e)
         {
             IBall ball = (IBall)sender;
             check_border(ball);
@@ -39,7 +39,7 @@ namespace Logic
                 
         }
 
-        private static void check_border(IBall ball)
+        private void check_border(IBall ball)
         {
             if (ball.X + ball.Velocity.X <= 0 || ball.X + ball.Velocity.X >= Board.Width - 2 * ball.R)
             {
@@ -70,18 +70,25 @@ namespace Logic
 
         }
 
-        public static void addBall(IBall ball)
+        public void addBall(IBall ball)
         {
             _balls.Add(ball);
         }
 
-        public static void activate()
+        public void activate()
         {
             foreach (var ball in _balls)
             {
                 ball.PropertyChanged += colide_event;
             }
             //new Thread(new ThreadStart(colide)).Start();
+        }
+        public void deactivate()
+        {
+            foreach (var ball in _balls)
+            {
+                ball.PropertyChanged -= colide_event;
+            }
         }
     }
 
