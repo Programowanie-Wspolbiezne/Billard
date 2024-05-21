@@ -1,4 +1,5 @@
 ﻿using Data;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,13 @@ namespace Logic
         private Collection<IBall> _balls = new Collection<IBall>();
         private Object lockk = new object();
         public IBoard Board { get; set; }
+        private readonly ILogger logger;
+
+
+       public ColisionDetector(ILogger logger)
+       {
+            this.logger = logger;
+       }
 
         private void colide_event(object sender, PropertyChangedEventArgs e)
         {
@@ -31,6 +39,7 @@ namespace Logic
                     {
                         if (distance(ball2, ball) <= 2 * ball.R)
                         {
+                            logger.LogInformation("Balls collided");
                             colide(ball2, ball);
                         }
                     }

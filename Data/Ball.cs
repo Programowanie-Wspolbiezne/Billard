@@ -11,7 +11,7 @@ namespace Data
 {
     internal class Ball : INotifyPropertyChanged,Data.IBall
     {
-
+     
         public double R {get; set;}
         public Vector2 Velocity { get; set; }
 

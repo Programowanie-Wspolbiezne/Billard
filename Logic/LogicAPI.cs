@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Data;
+using Microsoft.Extensions.Logging;
 
 namespace Logic
 {
@@ -16,11 +17,12 @@ namespace Logic
         {
             return new LogicApiImp();
         }
-
+  
         private class LogicApiImp : LogicAPI
         {
             ObservableCollection<IBall> Balls = new ObservableCollection<IBall>();
-            ColisionDetector ColisionDetector = new ColisionDetector();
+            ILoggerFactory Factory = new LoggerFactory();
+            ColisionDetector ColisionDetector = new ColisionDetector(LoggerProvider.GetLogger());
 
             public override ObservableCollection<IBall> Init(int ballCount)
             {
