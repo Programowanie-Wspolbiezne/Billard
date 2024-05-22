@@ -8,27 +8,37 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.Json;
+using System.Text.Json; 
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Data
 {
-    public class FileLogger : ILogger
+    internal class FileLogger : ILogger
     {
         private Thread thread;
         private static Queue<LogEvent> pendingLogEvents = new Queue<LogEvent> { };
+        private string filepath {  get; set; }
+        private ILogWriter logWriter;
 
 
-        private class LogEvent
+        public class LogEvent
         {
             public string Message { get; set; }
             public int eventId { get; set; }
+            public string timestamp {  get; set; }
         }
-        public FileLogger()
+        public FileLogger(string _filepath,ILogWriter writer)
         {
             thread = new Thread(new ThreadStart(writeToFileContinously));
             thread.Start();
+            filepath = _filepath;
+            logWriter = writer;
+            if (!logWriter.isFileValid(filepath))
+            {
+                logWriter.createValidFile(_filepath);
+            }
+            
         }
         public IDisposable? BeginScope<TState>(TState state) where TState : notnull
         {
@@ -39,38 +49,28 @@ namespace Data
         {
             return true;
         }
-
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             string message = formatter(state, exception);
             LogEvent logEntry = new LogEvent();
             logEntry.Message = message;
             logEntry.eventId = int.Parse(eventId.ToString());
+            logEntry.timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             pendingLogEvents.Enqueue(logEntry);
         }
+
         private void writeToFileContinously()
         {
-            while(true)
+            while (true)
             {
-                if (pendingLogEvents.Any()) {
+                if (pendingLogEvents.Any())
+                {
                     LogEvent item = pendingLogEvents.Dequeue();
-                    writeToFile(item);
+                    logWriter.appendToFile(item,filepath);
                 }
                 Thread.Sleep(1);
             }
         }
-        private void writeToFile(LogEvent logEvent)
-        {
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            docPath = Path.Combine(docPath, "WriteTextAsync.json");
-            string jsonString = File.ReadAllText(docPath);
-            List<LogEvent> currentContent = JsonSerializer.Deserialize<List<LogEvent>>(jsonString);
-            currentContent.Add(logEvent);
-            using (StreamWriter outputFile = new StreamWriter(docPath, append: false))
-            {
-                outputFile.Write(JsonSerializer.Serialize<List<LogEvent>>(currentContent));
-            }
-        
-        }
+
     }
 }

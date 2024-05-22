@@ -16,7 +16,11 @@ namespace Logic
 
         public static void ConfigureLogger(ILoggerFactory factory)
         {
-            factory.AddProvider(new FileLoggerProvider());
+           
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            docPath = Path.Combine(docPath, "logs.json");
+            FileLoggerProvider provider = new FileLoggerProvider(docPath);
+            factory.AddProvider(provider);
         }
 
 

@@ -39,7 +39,8 @@ namespace Logic
                     {
                         if (distance(ball2, ball) <= 2 * ball.R)
                         {
-                            logger.LogInformation("Balls collided");
+                       
+                       
                             colide(ball2, ball);
                         }
                     }
@@ -53,10 +54,12 @@ namespace Logic
             if (ball.X + ball.Velocity.X <= 0 || ball.X + ball.Velocity.X >= Board.Width - 2 * ball.R)
             {
                 ball.Velocity = new Vector2( -ball.Velocity.X, ball.Velocity.Y);
+                logger.LogInformation("Ball collided with vertical wall in X={X} Y={Y}",ball.X,ball.Y);
             }
             if (ball.Y + ball.Velocity.Y <= 0 || ball.Y + ball.Velocity.Y >= Board.Height - 2 * ball.R)
             {
                 ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
+                logger.LogInformation("Ball collided with horizontal wall in X={X} Y={Y}", ball.X, ball.Y);
             }
         }
 
