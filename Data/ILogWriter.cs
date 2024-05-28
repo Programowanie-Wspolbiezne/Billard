@@ -7,7 +7,7 @@ using static Data.FileLogger;
 
 namespace Data
 {
-    internal interface ILogWriter
+    public interface ILogWriter
     {
         public void appendToFile(LogEvent logEvent, string path);
         public void createValidFile(string path);

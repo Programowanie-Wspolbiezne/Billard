@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class FileLogger : ILogger
+    public class FileLogger : ILogger
     {
         private Thread thread;
         private static Queue<LogEvent> pendingLogEvents = new Queue<LogEvent> { };
@@ -68,7 +68,7 @@ namespace Data
                     LogEvent item = pendingLogEvents.Dequeue();
                     logWriter.appendToFile(item,filepath);
                 }
-                Thread.Sleep(1);
+                //Thread.Sleep(1);
             }
         }
 
