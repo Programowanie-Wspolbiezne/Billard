@@ -47,7 +47,8 @@ namespace LogicTests
             leftBall.PropertyChanged += (s, e) => { are.Set(); };
             rightBall.PropertyChanged += (s, e) => { are.Set(); };
 
-            ColisionDetector detector = new ColisionDetector();
+
+            ColisionDetector detector = new ColisionDetector(LoggerProvider.GetLogger());
             detector.Board = board;
             detector.AddBall(leftBall);
             detector.AddBall(rightBall);
