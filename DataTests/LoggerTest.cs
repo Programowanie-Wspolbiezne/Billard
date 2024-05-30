@@ -11,18 +11,14 @@ namespace DataTests
     public class LoggerTest
     {
 
-        internal class MockLogWriter : ILogWriter
+        internal class MockLogWriter(AutoResetEvent are, int logsToRecive) : ILogWriter
         {
-            List<LogEvent> logEvents = new List<LogEvent>();
-            AutoResetEvent are;
-            int counter = 0;
-            public MockLogWriter(AutoResetEvent are,int logsToRecive) {
-                this.are = are;
-                this.counter = logsToRecive;
-            }
+            readonly List<LogEvent> logEvents = [];
+            readonly AutoResetEvent are = are;
+            int counter = logsToRecive;
 
             public List<LogEvent> LogEvents { get { return logEvents; } }
-            public void appendToFile(LogEvent logEvent, string path)
+            public void AppendToFile(LogEvent logEvent, string path)
             {
                 logEvents.Add(logEvent);
                 if(--counter == 0)
@@ -31,12 +27,12 @@ namespace DataTests
                 }
             }
 
-            public void createValidFile(string path)
+            public void CreateValidFile(string path)
             {
                 return;
             }
 
-            public bool isFileValid(string path)
+            public bool IsFileValid(string path)
             {
                 return true;
             }
@@ -45,12 +41,12 @@ namespace DataTests
         [TestMethod]
         public void LoggerWriterTest()
         {
-            AutoResetEvent are = new AutoResetEvent(false);
-            MockLogWriter logWriter = new MockLogWriter(are,2);
-            FileLogger logger = new FileLogger("test",logWriter);
+            AutoResetEvent are = new(false);
+            MockLogWriter logWriter = new(are,2);
+            FileLogger logger = new("test",logWriter);
             logger.LogInformation("test1");
             logger.LogInformation("test2");
-            var wasSignaled = are.WaitOne(timeout: TimeSpan.FromSeconds(5));
+            are.WaitOne(timeout: TimeSpan.FromSeconds(5));
             Assert.AreEqual(2, logWriter.LogEvents.Count);
             Assert.AreEqual("test1", logWriter.LogEvents[0].Message);
             Assert.AreEqual("test2", logWriter.LogEvents[1].Message);

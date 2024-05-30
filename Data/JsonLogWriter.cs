@@ -1,56 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Text.Json;
 using static Data.FileLogger;
 
 namespace Data
 {
-    internal class JsonLogWriter : ILogWriter
+    internal class JsonLogWriter(JsonSerializerOptions options) : ILogWriter
     {
-        JsonSerializerOptions options = new JsonSerializerOptions();
+        readonly JsonSerializerOptions options = options;
 
-        public JsonLogWriter(JsonSerializerOptions options)
-        {
-            this.options = options;
-        }
-
-        public bool isFileValid(string path)
+        public bool IsFileValid(string path)
         {
             if (!File.Exists(path))
             {
                 return false;
             }
+
             try
             {
                 string filedata = File.ReadAllText(path);
                 List<LogEvent> events = JsonSerializer.Deserialize<List<LogEvent>>(filedata);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
             return true;
 
         }
-        public void createValidFile(string path)
+        public void CreateValidFile(string path)
         {
             File.WriteAllText(path, "[]");
         }
 
-        public void appendToFile(LogEvent logEvent, string path)
+        public void AppendToFile(LogEvent logEvent, string path)
         {
             string jsonString = File.ReadAllText(path);
             List<LogEvent> currentContent = JsonSerializer.Deserialize<List<LogEvent>>(jsonString);
             currentContent.Add(logEvent);
-            using (StreamWriter outputFile = new StreamWriter(path, append: false))
-            {
-                outputFile.Write(JsonSerializer.Serialize<List<LogEvent>>(currentContent, options));
-            }
+            using StreamWriter outputFile = new(path, append: false);
+            outputFile.Write(JsonSerializer.Serialize<List<LogEvent>>(currentContent, options));
 
         }
     }

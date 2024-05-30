@@ -1,6 +1,5 @@
 ﻿using Data;
 using Logic;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,23 +13,6 @@ namespace LogicTests
      public class CollisionDetectorTest
     {
 
-        internal class DummyLogger : ILogger
-        {
-            public IDisposable? BeginScope<TState>(TState state) where TState : notnull
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool IsEnabled(LogLevel logLevel)
-            {
-                return true;
-            }
-
-            public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
-            {
-                return;
-            }
-        }
 
         private void OnLeftBallPropertyChangeTest(object sender, PropertyChangedEventArgs e)
         {
@@ -59,17 +41,17 @@ namespace LogicTests
             rightBall.Velocity = new System.Numerics.Vector2(-1, 0);
             rightBall.Start();
 
-            IBoard board = Data.BoardFactory.createBoard(1000, 1000);
+            IBoard board = Data.BoardFactory.CreateBoard(1000, 1000);
 
             var are = new AutoResetEvent(false);
             leftBall.PropertyChanged += (s, e) => { are.Set(); };
             rightBall.PropertyChanged += (s, e) => { are.Set(); };
 
-            ColisionDetector detector = new ColisionDetector(new DummyLogger());
+            ColisionDetector detector = new ColisionDetector();
             detector.Board = board;
-            detector.addBall(leftBall);
-            detector.addBall(rightBall);
-            detector.activate();
+            detector.AddBall(leftBall);
+            detector.AddBall(rightBall);
+            detector.Activate();
 
             var wasSignaled = are.WaitOne(timeout: TimeSpan.FromSeconds(5));
             Assert.IsTrue(wasSignaled);

@@ -1,47 +1,30 @@
 ﻿using Data;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class ColisionDetector
+    public class ColisionDetector(ILogger logger)
     {
-        private Collection<IBall> _balls = new Collection<IBall>();
-        private Object lockk = new object();
+        private readonly Collection<IBall> _balls = [];
+        private readonly Object lockk = new();
         public IBoard Board { get; set; }
-        private readonly ILogger logger;
 
-
-       public ColisionDetector(ILogger logger)
-       {
-            this.logger = logger;
-       }
-
-        private void colide_event(object sender, PropertyChangedEventArgs e)
+        private void ColideEvent(object sender, PropertyChangedEventArgs e)
         {
             IBall ball = (IBall)sender;
-            check_border(ball);
+            CheckBorder(ball);
             lock (lockk)
             {
-                
                 foreach (var ball2 in _balls)
                 {
                     if (ball != ball2)
                     {
-                        if (distance(ball2, ball) <= 2 * ball.R)
+                        if (Distance(ball2, ball) <= 2 * ball.R)
                         {
-                       
-                       
-                            colide(ball2, ball);
+                            Colide(ball2, ball);
                         }
                     }
                 }
@@ -49,7 +32,7 @@ namespace Logic
                 
         }
 
-        private void check_border(IBall ball)
+        private void CheckBorder(IBall ball)
         {
             if (ball.X + ball.Velocity.X <= 0 || ball.X + ball.Velocity.X >= Board.Width - 2 * ball.R)
             {
@@ -63,7 +46,7 @@ namespace Logic
             }
         }
 
-        private static double distance(IBall ball, IBall ball2)
+        private static double Distance(IBall ball, IBall ball2)
         {
             
             double xdif = (ball.X + ball.Velocity.X)  - (ball2.X + ball2.Velocity.X);
@@ -72,7 +55,7 @@ namespace Logic
                
         }
 
-        private static void colide(IBall b1, IBall b2)
+        private static void Colide(IBall b1, IBall b2)
         {
             Vector2 vel1 = (b1.Mass - b2.Mass) / (b1.Mass + b2.Mass) * b1.Velocity + 2 * b2.Mass / (b1.Mass + b2.Mass) * b2.Velocity;
             Vector2 vel2 = (b1.Mass - b2.Mass) / (b1.Mass + b2.Mass) * b2.Velocity + 2 * b2.Mass / (b1.Mass + b2.Mass) * b1.Velocity;
@@ -82,24 +65,23 @@ namespace Logic
 
         }
 
-        public void addBall(IBall ball)
+        public void AddBall(IBall ball)
         {
             _balls.Add(ball);
         }
 
-        public void activate()
+        public void Activate()
         {
             foreach (var ball in _balls)
             {
-                ball.PropertyChanged += colide_event;
+                ball.PropertyChanged += ColideEvent;
             }
-            //new Thread(new ThreadStart(colide)).Start();
         }
-        public void deactivate()
+        public void Deactivate()
         {
             foreach (var ball in _balls)
             {
-                ball.PropertyChanged -= colide_event;
+                ball.PropertyChanged -= ColideEvent;
             }
             _balls.Clear();
         }

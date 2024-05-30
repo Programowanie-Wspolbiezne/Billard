@@ -1,42 +1,30 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.Json; 
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Data
 {
     public class FileLogger : ILogger
     {
-        private Thread thread;
-        private static Queue<LogEvent> pendingLogEvents = new Queue<LogEvent> { };
-        private string filepath {  get; set; }
-        private ILogWriter logWriter;
+        private readonly Thread thread;
+        private static readonly Queue<LogEvent> pendingLogEvents = new() { };
+        private string Filepath {  get; set; }
+        private readonly ILogWriter logWriter;
 
 
-        public class LogEvent
+        public class LogEvent(string message, int eventId, string timestamp)
         {
-            public string Message { get; set; }
-            public int eventId { get; set; }
-            public string timestamp {  get; set; }
+            public string Message { get; set; } = message;
+            public int EventId { get; set; } = eventId;
+            public string Timestamp { get; set; } = timestamp;
         }
         public FileLogger(string _filepath,ILogWriter writer)
         {
-            thread = new Thread(new ThreadStart(writeToFileContinously));
+            thread = new Thread(new ThreadStart(WriteToFileContinously));
             thread.Start();
-            filepath = _filepath;
+            Filepath = _filepath;
             logWriter = writer;
-            if (!logWriter.isFileValid(filepath))
+            if (!logWriter.IsFileValid(Filepath))
             {
-                logWriter.createValidFile(_filepath);
+                logWriter.CreateValidFile(_filepath);
             }
             
         }
@@ -52,23 +40,19 @@ namespace Data
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             string message = formatter(state, exception);
-            LogEvent logEntry = new LogEvent();
-            logEntry.Message = message;
-            logEntry.eventId = int.Parse(eventId.ToString());
-            logEntry.timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            LogEvent logEntry = new(message, int.Parse(eventId.ToString()), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
             pendingLogEvents.Enqueue(logEntry);
         }
 
-        private void writeToFileContinously()
+        private void WriteToFileContinously()
         {
             while (true)
             {
-                if (pendingLogEvents.Any())
+                if (pendingLogEvents.Count != 0)
                 {
                     LogEvent item = pendingLogEvents.Dequeue();
-                    logWriter.appendToFile(item,filepath);
+                    logWriter.AppendToFile(item,Filepath);
                 }
-                //Thread.Sleep(1);
             }
         }
 

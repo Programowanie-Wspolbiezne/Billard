@@ -1,13 +1,5 @@
 ﻿using Logic;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Presentation
 {
@@ -19,18 +11,18 @@ namespace Presentation
             Restart = new Start(this);
         }
 
-        public ObservableCollection<IBall> Balls { get; set; } = new ObservableCollection<IBall>();
+        public ObservableCollection<IBall> Balls { get; set; } = [];
         public string BallCount { get; set; } = "";
-        LogicAPI logicAPI = LogicAPI.getInstance();
+        readonly LogicAPI logicAPI = LogicAPI.GetInstance();
 
 
 
-        public void restart()
+        public void RestartGame()
         {
-            start(int.Parse(BallCount));
+            Start(int.Parse(BallCount));
         }
 
-        private void start(int ballCount)
+        private void Start(int ballCount)
         {
             ObservableCollection<IBall> balls = logicAPI.Init(ballCount);
             Balls.Clear();

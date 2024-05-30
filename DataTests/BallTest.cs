@@ -9,7 +9,7 @@ namespace DataTests
         [TestMethod]
         public void CreateBallTest()
         {
-            Data.IBall dball = BallFactory.createBall(8, 10, 10);
+            Data.IBall dball = BallFactory.CreateBall(8, 10, 10);
             Assert.IsTrue(dball != null);
             Assert.IsTrue(dball.X == 10);
             Assert.IsTrue(dball.Y == 10);
@@ -38,7 +38,7 @@ namespace DataTests
         [TestMethod]
         public void ObserversTest()
         {
-            Data.IBall dball = BallFactory.createBall(8, 10, 10);
+            Data.IBall dball = BallFactory.CreateBall(8, 10, 10);
             dball.PropertyChanged += OnDballPropertyChange;
             dball.X = 5; dball.Y = 10;
         }
@@ -47,7 +47,7 @@ namespace DataTests
         [TestMethod]
         public void SetterGetterTest()
         {
-            Data.IBall dball = BallFactory.createBall(8, 10, 10);
+            Data.IBall dball = BallFactory.CreateBall(8, 10, 10);
             dball.X = 5; dball.Y = 10;
             Assert.IsTrue(dball.X == 5);
             Assert.IsTrue(dball.Y == 10);

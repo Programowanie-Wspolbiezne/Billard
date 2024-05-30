@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data
+﻿namespace Data
 {
-    internal class Board : IBoard
+    internal class Board(int width, int height) : IBoard
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
-
-        public Board(int width, int height)
-        {
-            Width = width;
-            Height = height;
-        }
-
+        public int Width { get; set; } = width;
+        public int Height { get; set; } = height;
     }
   
 }

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data
+﻿namespace Data
 {
     public abstract class BallFactory
     {
-        public static Data.IBall createBall(double radius, double x, double y)
+        public static IBall CreateBall(double radius, double x, double y)
         {
-            Data.Ball ball =  new Data.Ball(radius);
-            ball.X = x;
-            ball.Y = y;
+            Ball ball = new(radius)
+            {
+                X = x,
+                Y = y
+            };
             return ball;
         }
     }

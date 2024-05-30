@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Presentation
 {
-    internal class Start : ICommand
+    internal class Start(MainWindowVM viewModel) : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        
-        MainWindowVM vm;
 
-        public Start(MainWindowVM viewModel) {
-            vm = viewModel;
-        }
+        readonly MainWindowVM vm = viewModel;
 
         public bool CanExecute(object? parameter)
         {
@@ -24,7 +15,7 @@ namespace Presentation
 
         public void Execute(object? parameter)
         {
-            vm.restart();
+            vm.RestartGame();
         }
     }
 }

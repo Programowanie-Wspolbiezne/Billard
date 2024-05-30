@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data
+﻿namespace Data
 {
     public abstract class BoardFactory
     {
-        public static Data.IBoard createBoard(int width,int height)
+        public static IBoard CreateBoard(int width,int height)
         {
-            Data.Board board = new Data.Board(width,height);
-            return board;
+            return new Board(width, height); 
         }
     }
 }

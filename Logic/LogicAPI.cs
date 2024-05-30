@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Data;
 using Microsoft.Extensions.Logging;
 
@@ -13,20 +8,19 @@ namespace Logic
     {
         public abstract ObservableCollection<IBall> Init(int ballCount);
 
-        public static LogicAPI getInstance()
+        public static LogicAPI GetInstance()
         {
             return new LogicApiImp();
         }
   
         private class LogicApiImp : LogicAPI
         {
-            ObservableCollection<IBall> Balls = new ObservableCollection<IBall>();
-            ILoggerFactory Factory = new LoggerFactory();
-            ColisionDetector ColisionDetector = new ColisionDetector(LoggerProvider.GetLogger());
+            readonly ObservableCollection<IBall> Balls = [];
+            readonly ColisionDetector ColisionDetector = new(LoggerProvider.GetLogger());
 
             public override ObservableCollection<IBall> Init(int ballCount)
             {
-                IBoard board = Data.BoardFactory.createBoard(600, 300);
+                IBoard board = BoardFactory.CreateBoard(600, 300);
                 
                 ColisionDetector.Board = board;
 
@@ -35,17 +29,17 @@ namespace Logic
                     ball.Kill();
                 }
                 Balls.Clear();
-                ColisionDetector.deactivate();
+                ColisionDetector.Deactivate();
 
                 for (int i = 0; i < ballCount; i++)
                 {
                     IBall ball = BallFactory.CreateBall(new Random().NextDouble() * 580, new Random().NextDouble() * 280, 10);
-                    ColisionDetector.addBall(ball);
+                    ColisionDetector.AddBall(ball);
                 
                     Balls.Add(ball);
                 }
 
-                ColisionDetector.activate();
+                ColisionDetector.Activate();
 
                 foreach (var ball in Balls)
                 {

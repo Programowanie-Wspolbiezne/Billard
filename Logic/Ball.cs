@@ -1,18 +1,11 @@
-﻿using Data;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class Ball : Logic.IBall
+    public class Ball : IBall
     {
-        Data.IBall dBall;
+        readonly Data.IBall dBall;
         
         public Ball(Data.IBall _dBall) 
         {
@@ -27,7 +20,7 @@ namespace Logic
         }
 
 
-        private Thread thread;
+        private readonly Thread thread;
 
         public Vector2 Velocity { get { return dBall.Velocity; } set { dBall.Velocity = value; } }
         public double X { get { return dBall.X; } }

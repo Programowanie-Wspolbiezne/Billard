@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Ball : INotifyPropertyChanged,Data.IBall
+    internal class Ball(double radius) : INotifyPropertyChanged, IBall
     {
-     
-        public double R {get; set;}
+
+        public double R { get; set; } = radius;
         public Vector2 Velocity { get; set; }
 
-        public Ball(double radius)
-        {
-            this.R = radius;
-        }
         private double x;
        
         //should this be observable or should all of that
