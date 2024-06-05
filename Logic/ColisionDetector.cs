@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Logic
 {
-    public class ColisionDetector(ILogger logger)
+    public class ColisionDetector()
     {
         private readonly Collection<IBall> _balls = [];
         private readonly Object lockk = new();
@@ -37,12 +37,12 @@ namespace Logic
             if (ball.X + ball.Velocity.X <= 0 || ball.X + ball.Velocity.X >= Board.Width - 2 * ball.R)
             {
                 ball.Velocity = new Vector2( -ball.Velocity.X, ball.Velocity.Y);
-                logger.LogInformation("Ball collided with vertical wall in X={X} Y={Y}",ball.X,ball.Y);
+                //logger.LogInformation("Ball collided with vertical wall in X={X} Y={Y}",ball.X,ball.Y);
             }
             if (ball.Y + ball.Velocity.Y <= 0 || ball.Y + ball.Velocity.Y >= Board.Height - 2 * ball.R)
             {
                 ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
-                logger.LogInformation("Ball collided with horizontal wall in X={X} Y={Y}", ball.X, ball.Y);
+               // logger.LogInformation("Ball collided with horizontal wall in X={X} Y={Y}", ball.X, ball.Y);
             }
         }
 

@@ -6,17 +6,28 @@ namespace Logic
 {
     public abstract class LogicAPI
     {
+
         public abstract ObservableCollection<IBall> Init(int ballCount);
 
         public static LogicAPI GetInstance()
         {
             return new LogicApiImp();
         }
-  
+
         private class LogicApiImp : LogicAPI
         {
-            readonly ObservableCollection<IBall> Balls = [];
-            readonly ColisionDetector ColisionDetector = new(LoggerProvider.GetLogger());
+            private static ILogger logger = LoggerProvider.GetLogger();
+            private static ObservableCollection<IBall> Balls = [];
+            readonly ColisionDetector ColisionDetector = new();
+            Timer timer = new Timer(LogBalls, null, 100, 10000);
+
+            private static void LogBalls(object? state)
+            {
+                foreach (var ball in Balls)
+                {
+                    logger.LogInformation("Ball was in X={X} Y={Y} position", ball.X, ball.Y);
+                }
+            }
 
             public override ObservableCollection<IBall> Init(int ballCount)
             {
